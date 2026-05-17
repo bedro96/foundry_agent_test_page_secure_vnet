@@ -1,0 +1,69 @@
+[project]
+name = "foundry-agent-backend"
+version = "0.1.0"
+description = "ChatGPT-style backend using Microsoft Agent Framework with Azure AI Foundry"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.135.2",
+    "uvicorn[standard]>=0.42.0",
+    "azure-ai-projects>=2.0.0",
+    "azure-identity>=1.25.3",
+    "openai>=1.58.0",
+    "pydantic>=2.10.0",
+    "pydantic-settings>=2.13.1",
+    "python-dotenv>=1.0.0",
+    "aiohttp>=3.10.0",
+    "imageio-ffmpeg>=0.6.0",
+    "starlette>=0.41.0",
+    "python-multipart>=0.0.27",
+    "httpx>=0.27.0",
+    "sqlalchemy[asyncio]>=2.0.0",
+    "pymysql>=1.1.0",
+    "cryptography>=43.0.0",
+    "bcrypt>=4.0",
+    "PyJWT>=2.8",
+    "structlog>=24.0.0",
+    "opentelemetry-sdk>=1.40,<1.41",
+    "azure-core-tracing-opentelemetry>=1.0.0b12",
+    "azure-monitor-opentelemetry>=1.8.7",
+    "opentelemetry-exporter-otlp>=1.40,<1.41",
+    "langchain-openai>=1.2.1",
+    "langchain-mcp-adapters>=0.2.2",
+    "langgraph>=1.1.10",
+    "copilot>=0.1.9",
+    "copilot-client>=1.0.0",
+    "github-copilot-sdk>=0.3.0",
+    "termcolor>=3.3.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.24.0",
+    "httpx>=0.27.0",
+    "ruff>=0.8.0",
+    "mypy>=1.13.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true

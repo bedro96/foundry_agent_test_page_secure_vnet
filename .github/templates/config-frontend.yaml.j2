@@ -1,0 +1,39 @@
+properties:
+  configuration:
+    secrets:
+      - name: registry-password
+        value: {{ registry_password }}
+    registries:
+      - server: {{ registry_name }}.azurecr.io
+        username: {{ registry_name }}
+        passwordSecretRef: registry-password
+  template:
+    containers:
+      - name: {{ container_app_name }}
+        image: {{ registry_name }}.azurecr.io/{{ image_name }}:{{ image_tag }}
+        resources:
+          cpu: 0.25
+          memory: 0.5Gi
+        probes:
+          - type: Liveness
+            httpGet:
+              path: /health
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 2
+            periodSeconds: 10
+          - type: Readiness
+            httpGet:
+              path: /health
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 2
+            periodSeconds: 10
+    scale:
+      minReplicas: 1
+      maxReplicas: 1
+      rules:
+        - name: http-scaler
+          http:
+            metadata:
+              concurrentRequests: "20"

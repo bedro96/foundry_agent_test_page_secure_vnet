@@ -1,0 +1,532 @@
+[09:25:28] | INFO | default_logger | foundry_agent_cli:170 | Starting Foundry Agent CLI application
+[09:25:28] | INFO | azure.core.pipeline.policies.http_logging_policy | _universal:508 | Request URL: 'https://login.microsoftonline.com/56f1a052-bd09-41fb-9aeb-b2c206e7e54f/oauth2/v2.0/token'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/x-www-form-urlencoded'
+    'User-Agent': 'azsdk-python-identity/1.25.3 Python/3.13.7 (Linux-6.17.0-1010-azure-x86_64-with-glibc2.39)'
+A body is sent with the request
+[09:25:28] | INFO | azure.core.pipeline.policies.http_logging_policy | _universal:554 | Response status: 200
+Response headers:
+    'Cache-Control': 'no-store, no-cache'
+    'Pragma': 'no-cache'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Expires': '-1'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'x-ms-clientdata': 'REDACTED'
+    'P3P': 'REDACTED'
+    'x-ms-request-id': '7399bcd9-4210-4ed3-a6b4-2b6a5a3a4000'
+    'x-ms-ests-server': 'REDACTED'
+    'x-ms-srs': 'REDACTED'
+    'Content-Security-Policy-Report-Only': 'REDACTED'
+    'X-XSS-Protection': 'REDACTED'
+    'Set-Cookie': 'REDACTED'
+    'Date': 'Wed, 29 Apr 2026 09:25:28 GMT'
+    'Content-Length': '1733'
+[09:25:28] | INFO | azure.identity.aio._internal.get_token_mixin | get_token_mixin:139 | ClientSecretCredential.get_token_info succeeded
+[09:25:28] | INFO | azure.core.pipeline.policies.http_logging_policy | _universal:511 | Request URL: 'https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/connections/groundedbybingfzu598?api-version=REDACTED'
+Request method: 'GET'
+Request headers:
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '5c7b5922-43ad-11f1-9e9d-1135808c074a'
+    'User-Agent': 'azsdk-python-ai-projects/2.1.0 Python/3.13.7 (Linux-6.17.0-1010-azure-x86_64-with-glibc2.39)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+[09:25:29] | INFO | azure.core.pipeline.policies.http_logging_policy | _universal:554 | Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Encoding': 'REDACTED'
+    'Vary': 'REDACTED'
+    'Request-Context': 'REDACTED'
+    'x-ms-response-type': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'azureml-served-by-cluster': 'REDACTED'
+    'x-request-time': 'REDACTED'
+    'apim-request-id': 'REDACTED'
+    'x-ms-region': 'REDACTED'
+    'Date': 'Wed, 29 Apr 2026 09:25:28 GMT'
+[09:25:29] | INFO | default_logger | foundry_agent_cli:185 | Bing Grounding Connection ID: /subscriptions/3978298f-8fe5-497d-8672-99a7cf935191/resourceGroups/public-ai-rg/providers/Microsoft.CognitiveServices/accounts/eus2-project-kuko/projects/chat-project/connections/groundedbybingfzu598
+[09:25:29] | INFO | azure.core.pipeline.policies.http_logging_policy | _universal:511 | Request URL: 'https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/agents/mcp-test-agent?api-version=REDACTED'
+Request method: 'GET'
+Request headers:
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '5d418138-43ad-11f1-9e9d-1135808c074a'
+    'User-Agent': 'azsdk-python-ai-projects/2.1.0 Python/3.13.7 (Linux-6.17.0-1010-azure-x86_64-with-glibc2.39)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+[09:25:30] | INFO | azure.core.pipeline.policies.http_logging_policy | _universal:554 | Response status: 404
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Encoding': 'REDACTED'
+    'Vary': 'REDACTED'
+    'request-context': 'REDACTED'
+    'x-ms-response-type': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'azureml-served-by-cluster': 'REDACTED'
+    'apim-request-id': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'x-content-type-options': 'REDACTED'
+    'x-ms-region': 'REDACTED'
+    'Date': 'Wed, 29 Apr 2026 09:25:29 GMT'
+[09:25:30] | INFO | default_logger | foundry_agent_cli:196 | Agent 'mcp-test-agent' not found. Creating new agent.
+[09:25:30] | INFO | azure.core.pipeline.policies.http_logging_policy | _universal:508 | Request URL: 'https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/agents/mcp-test-agent/versions?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '1010'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '5d8945fe-43ad-11f1-9e9d-1135808c074a'
+    'User-Agent': 'azsdk-python-ai-projects/2.1.0 Python/3.13.7 (Linux-6.17.0-1010-azure-x86_64-with-glibc2.39)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+[09:25:32] | INFO | azure.core.pipeline.policies.http_logging_policy | _universal:554 | Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Encoding': 'REDACTED'
+    'Vary': 'REDACTED'
+    'request-context': 'REDACTED'
+    'x-ms-response-type': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'azureml-served-by-cluster': 'REDACTED'
+    'apim-request-id': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'x-content-type-options': 'REDACTED'
+    'x-ms-region': 'REDACTED'
+    'Date': 'Wed, 29 Apr 2026 09:25:32 GMT'
+[09:25:32] | INFO | default_logger | foundry_agent_cli:230 | agent created with name: mcp-test-agent, version: 1
+[09:28:00] | INFO | azure.identity.aio._internal.get_token_mixin | get_token_mixin:139 | ClientSecretCredential.get_token_info succeeded
+[09:28:01] | INFO | httpx | _client:1740 | HTTP Request: POST https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/openai/v1/conversations "HTTP/1.1 200 OK"
+[09:28:03] | INFO | httpx | _client:1740 | HTTP Request: POST https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/openai/v1/responses "HTTP/1.1 200 OK"
+[09:28:04] | INFO | default_logger | foundry_agent_cli:323 | Response creation event received with response ID: resp_d7a1dbdb09fb39af0069f1cf227a108190959194ae1188c06e
+[09:28:04] | INFO | default_logger | foundry_agent_cli:326 | Response in progress event received with response ID: resp_d7a1dbdb09fb39af0069f1cf227a108190959194ae1188c06e
+[09:28:04] | INFO | default_logger | foundry_agent_cli:328 | New output item added. Type: "web_search_call"
+[09:28:04] | INFO | default_logger | foundry_agent_cli:343 | Unfiltered other items : {
+  "item_id": "ws_d7a1dbdb09fb39af0069f1cf236bc0819084afdc2e1652e435",
+  "output_index": 0,
+  "sequence_number": 3,
+  "type": "response.web_search_call.in_progress"
+}
+[09:28:04] | INFO | default_logger | foundry_agent_cli:343 | Unfiltered other items : {
+  "item_id": "ws_d7a1dbdb09fb39af0069f1cf236bc0819084afdc2e1652e435",
+  "output_index": 0,
+  "sequence_number": 4,
+  "type": "response.web_search_call.searching"
+}
+[09:28:05] | INFO | default_logger | foundry_agent_cli:343 | Unfiltered other items : {
+  "item_id": "ws_d7a1dbdb09fb39af0069f1cf236bc0819084afdc2e1652e435",
+  "output_index": 0,
+  "sequence_number": 5,
+  "type": "response.web_search_call.completed"
+}
+[09:28:05] | INFO | default_logger | foundry_agent_cli:341 | Output item completed. Type: "web_search_call"
+[09:28:05] | INFO | default_logger | foundry_agent_cli:328 | New output item added. Type: "message"
+[09:28:05] | INFO | default_logger | foundry_agent_cli:330 | New content part added: {
+  "annotations": [],
+  "text": "",
+  "type": "output_text",
+  "logprobs": []
+}
+[09:28:05] | INFO | default_logger | foundry_agent_cli:310 | Delta: "If you want a quick dinner recommendation **"
+[09:28:05] | INFO | default_logger | foundry_agent_cli:310 | Delta: "right now**,"
+[09:28:05] | INFO | default_logger | foundry_agent_cli:310 | Delta: " I’d go with one"
+[09:28:05] | INFO | default_logger | foundry_agent_cli:310 | Delta: " of these based on mood:\n\n- **Comfort"
+[09:28:06] | INFO | default_logger | foundry_agent_cli:310 | Delta: "ing:** kim"
+[09:28:06] | INFO | default_logger | foundry_agent_cli:310 | Delta: "chi jjigae"
+[09:28:06] | INFO | default_logger | foundry_agent_cli:310 | Delta: " or doenjang jj"
+[09:28:06] | INFO | default_logger | foundry_agent_cli:310 | Delta: "igae\n- **"
+[09:28:06] | INFO | default_logger | foundry_agent_cli:310 | Delta: "Healthy/light"
+[09:28:06] | INFO | default_logger | foundry_agent_cli:310 | Delta: ":** grilled fish with"
+[09:28:06] | INFO | default_logger | foundry_agent_cli:310 | Delta: " rice and"
+[09:28:06] | INFO | default_logger | foundry_agent_cli:310 | Delta: " banchan\n"
+[09:28:06] | INFO | default_logger | foundry_agent_cli:310 | Delta: "- **"
+[09:28:06] | INFO | default_logger | foundry_agent_cli:310 | Delta: "Treat yourself"
+[09:28:06] | INFO | default_logger | foundry_agent_cli:310 | Delta: ":** Korean"
+[09:28:06] | INFO | default_logger | foundry_agent_cli:310 | Delta: " BBQ"
+[09:28:07] | INFO | default_logger | foundry_agent_cli:310 | Delta: "\n"
+[09:28:07] | INFO | default_logger | foundry_agent_cli:310 | Delta: "- **Fast"
+[09:28:07] | INFO | default_logger | foundry_agent_cli:310 | Delta: "/e"
+[09:28:07] | INFO | default_logger | foundry_agent_cli:310 | Delta: "asy:** bibimbap"
+[09:28:07] | INFO | default_logger | foundry_agent_cli:310 | Delta: "\n- **Warm and cozy"
+[09:28:07] | INFO | default_logger | foundry_agent_cli:310 | Delta: ":** kalguksu"
+[09:28:07] | INFO | default_logger | foundry_agent_cli:310 | Delta: " or se"
+[09:28:07] | INFO | default_logger | foundry_agent_cli:310 | Delta: "olleongtang\n- **If"
+[09:28:07] | INFO | default_logger | foundry_agent_cli:310 | Delta: " it’s a nice"
+[09:28:07] | INFO | default_logger | foundry_agent_cli:310 | Delta: " evening"
+[09:28:07] | INFO | default_logger | foundry_agent_cli:310 | Delta: " in Seoul:** fried chicken +"
+[09:28:08] | INFO | default_logger | foundry_agent_cli:310 | Delta: " beer can"
+[09:28:08] | INFO | default_logger | foundry_agent_cli:310 | Delta: " be a good casual pick\n\n"
+[09:28:08] | INFO | default_logger | foundry_agent_cli:310 | Delta: "Since Seoul looks fairly mild today"
+[09:28:08] | INFO | default_logger | foundry_agent_cli:310 | Delta: ", around"
+[09:28:08] | INFO | default_logger | foundry_agent_cli:310 | Delta: " the high teens to"
+[09:28:08] | INFO | default_logger | foundry_agent_cli:310 | Delta: " low 20s °C with generally"
+[09:28:08] | INFO | default_logger | foundry_agent_cli:310 | Delta: " decent conditions, both"
+[09:28:08] | INFO | default_logger | foundry_agent_cli:310 | Delta: " a sit"
+[09:28:09] | INFO | default_logger | foundry_agent_cli:310 | Delta: "-down meal or a short"
+[09:28:09] | INFO | default_logger | foundry_agent_cli:310 | Delta: " walk to somewhere"
+[09:28:09] | INFO | default_logger | foundry_agent_cli:310 | Delta: " nearby"
+[09:28:09] | INFO | default_logger | foundry_agent_cli:310 | Delta: " sound reasonable"
+[09:28:09] | INFO | default_logger | foundry_agent_cli:310 | Delta: ". "
+[09:28:09] | INFO | default_logger | foundry_agent_cli:310 | Delta: "([kma.go.kr](https://www.kma.go.kr/neng/forecast/current-weather.do)"
+[09:28:09] | INFO | default_logger | foundry_agent_cli:310 | Delta: ")\n\nIf"
+[09:28:09] | INFO | default_logger | foundry_agent_cli:343 | Unfiltered other items : {
+  "annotation": {
+    "type": "url_citation",
+    "end_index": 649,
+    "start_index": 580,
+    "title": "Current Weather in Korea - Korea Meteorological Administration",
+    "url": "https://www.kma.go.kr/neng/forecast/current-weather.do"
+  },
+  "annotation_index": 0,
+  "content_index": 0,
+  "item_id": "msg_d7a1dbdb09fb39af0069f1cf257e108190821e52d74e261ab6",
+  "output_index": 1,
+  "sequence_number": 51,
+  "type": "response.output_text.annotation.added"
+}
+[09:28:09] | INFO | default_logger | foundry_agent_cli:310 | Delta: " you want, I can narrow it down by"
+[09:28:09] | INFO | default_logger | foundry_agent_cli:310 | Delta: ":\n1. **"
+[09:28:09] | INFO | default_logger | foundry_agent_cli:310 | Delta: "budget**\n2. **delivery"
+[09:28:09] | INFO | default_logger | foundry_agent_cli:310 | Delta: " vs going out**"
+[09:28:10] | INFO | default_logger | foundry_agent_cli:310 | Delta: "\n3. **healthy"
+[09:28:10] | INFO | default_logger | foundry_agent_cli:310 | Delta: " vs indulg"
+[09:28:10] | INFO | default_logger | foundry_agent_cli:310 | Delta: "ent**\n4. **Korean /"
+[09:28:10] | INFO | default_logger | foundry_agent_cli:310 | Delta: " Japanese / Chinese"
+[09:28:10] | INFO | default_logger | foundry_agent_cli:310 | Delta: " / Western /"
+[09:28:10] | INFO | default_logger | foundry_agent_cli:310 | Delta: " anything"
+[09:28:10] | INFO | default_logger | foundry_agent_cli:310 | Delta: "**"
+[09:28:10] | INFO | default_logger | foundry_agent_cli:316 | Complete output: "If you want a quick dinner recommendation **right now**, I’d go with one of these based on mood:\n\n- **Comforting:** kimchi jjigae or doenjang jjigae\n- **Healthy/light:** grilled fish with rice and banchan\n- **Treat yourself:** Korean BBQ\n- **Fast/easy:** bibimbap\n- **Warm and cozy:** kalguksu or seolleongtang\n- **If it’s a nice evening in Seoul:** fried chicken + beer can be a good casual pick\n\nSince Seoul looks fairly mild today, around the high teens to low 20s °C with generally decent conditions, both a sit-down meal or a short walk to somewhere nearby sound reasonable. ([kma.go.kr](https://www.kma.go.kr/neng/forecast/current-weather.do))\n\nIf you want, I can narrow it down by:\n1. **budget**\n2. **delivery vs going out**\n3. **healthy vs indulgent**\n4. **Korean / Japanese / Chinese / Western / anything**"
+[09:28:10] | INFO | default_logger | foundry_agent_cli:339 | Content part completed: {
+  "annotations": [
+    {
+      "end_index": 649,
+      "start_index": 580,
+      "title": "Current Weather in Korea - Korea Meteorological Administration",
+      "type": "url_citation",
+      "url": "https://www.kma.go.kr/neng/forecast/current-weather.do"
+    }
+  ],
+  "text": "If you want a quick dinner recommendation **right now**, I’d go with one of these based on mood:\n\n- **Comforting:** kimchi jjigae or doenjang jjigae\n- **Healthy/light:** grilled fish with rice and banchan\n- **Treat yourself:** Korean BBQ\n- **Fast/easy:** bibimbap\n- **Warm and cozy:** kalguksu or seolleongtang\n- **If it’s a nice evening in Seoul:** fried chicken + beer can be a good casual pick\n\nSince Seoul looks fairly mild today, around the high teens to low 20s °C with generally decent conditions, both a sit-down meal or a short walk to somewhere nearby sound reasonable. ([kma.go.kr](https://www.kma.go.kr/neng/forecast/current-weather.do))\n\nIf you want, I can narrow it down by:\n1. **budget**\n2. **delivery vs going out**\n3. **healthy vs indulgent**\n4. **Korean / Japanese / Chinese / Western / anything**",
+  "type": "output_text",
+  "logprobs": []
+}
+[09:28:10] | INFO | default_logger | foundry_agent_cli:341 | Output item completed. Type: "message"
+[09:28:10] | INFO | default_logger | foundry_agent_cli:319 | input_tokens: 9489, output_tokens: 251, total_tokens: 9740
+[09:28:10] | INFO | default_logger | foundry_agent_cli:321 | Response completed successfully.
+[09:28:48] | INFO | default_logger | foundry_agent_cli:246 | Exiting the conversation loop.
+[09:28:48] | ERROR | asyncio | base_events:1879 | Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x736c1b39b890>
+[09:28:58] | INFO | default_logger | foundry_agent_cli:169 | Starting Foundry Agent CLI application
+[09:28:58] | INFO | azure.core.pipeline.policies.http_logging_policy | _universal:508 | Request URL: 'https://login.microsoftonline.com/56f1a052-bd09-41fb-9aeb-b2c206e7e54f/oauth2/v2.0/token'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/x-www-form-urlencoded'
+    'User-Agent': 'azsdk-python-identity/1.25.3 Python/3.13.7 (Linux-6.17.0-1010-azure-x86_64-with-glibc2.39)'
+A body is sent with the request
+[09:28:59] | INFO | azure.core.pipeline.policies.http_logging_policy | _universal:554 | Response status: 200
+Response headers:
+    'Cache-Control': 'no-store, no-cache'
+    'Pragma': 'no-cache'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Expires': '-1'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'x-ms-clientdata': 'REDACTED'
+    'P3P': 'REDACTED'
+    'x-ms-request-id': '88f4494b-d862-469a-b72d-250123c53900'
+    'x-ms-ests-server': 'REDACTED'
+    'x-ms-srs': 'REDACTED'
+    'Content-Security-Policy-Report-Only': 'REDACTED'
+    'X-XSS-Protection': 'REDACTED'
+    'Set-Cookie': 'REDACTED'
+    'Date': 'Wed, 29 Apr 2026 09:28:59 GMT'
+    'Content-Length': '1733'
+[09:28:59] | INFO | azure.identity.aio._internal.get_token_mixin | get_token_mixin:139 | ClientSecretCredential.get_token_info succeeded
+[09:28:59] | INFO | azure.core.pipeline.policies.http_logging_policy | _universal:511 | Request URL: 'https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/connections/groundedbybingfzu598?api-version=REDACTED'
+Request method: 'GET'
+Request headers:
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'd9e71464-43ad-11f1-9922-c5b2d359ede8'
+    'User-Agent': 'azsdk-python-ai-projects/2.1.0 Python/3.13.7 (Linux-6.17.0-1010-azure-x86_64-with-glibc2.39)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+[09:29:00] | INFO | azure.core.pipeline.policies.http_logging_policy | _universal:554 | Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Encoding': 'REDACTED'
+    'Vary': 'REDACTED'
+    'Request-Context': 'REDACTED'
+    'x-ms-response-type': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'azureml-served-by-cluster': 'REDACTED'
+    'x-request-time': 'REDACTED'
+    'apim-request-id': 'REDACTED'
+    'x-ms-region': 'REDACTED'
+    'Date': 'Wed, 29 Apr 2026 09:29:00 GMT'
+[09:29:00] | INFO | default_logger | foundry_agent_cli:184 | Bing Grounding Connection ID: /subscriptions/3978298f-8fe5-497d-8672-99a7cf935191/resourceGroups/public-ai-rg/providers/Microsoft.CognitiveServices/accounts/eus2-project-kuko/projects/chat-project/connections/groundedbybingfzu598
+[09:29:00] | INFO | azure.core.pipeline.policies.http_logging_policy | _universal:511 | Request URL: 'https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/agents/mcp-test-agent?api-version=REDACTED'
+Request method: 'GET'
+Request headers:
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'db10e676-43ad-11f1-9922-c5b2d359ede8'
+    'User-Agent': 'azsdk-python-ai-projects/2.1.0 Python/3.13.7 (Linux-6.17.0-1010-azure-x86_64-with-glibc2.39)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+[09:29:01] | INFO | azure.core.pipeline.policies.http_logging_policy | _universal:554 | Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Encoding': 'REDACTED'
+    'Vary': 'REDACTED'
+    'request-context': 'REDACTED'
+    'x-ms-response-type': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'azureml-served-by-cluster': 'REDACTED'
+    'apim-request-id': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'x-content-type-options': 'REDACTED'
+    'x-ms-region': 'REDACTED'
+    'Date': 'Wed, 29 Apr 2026 09:29:00 GMT'
+[09:29:01] | INFO | default_logger | foundry_agent_cli:231 | Agent 'mcp-test-agent' found. Existing agent will be used.
+[09:29:01] | INFO | default_logger | foundry_agent_cli:234 | Agent name: mcp-test-agent will be utilized
+[09:29:17] | INFO | azure.identity.aio._internal.get_token_mixin | get_token_mixin:139 | ClientSecretCredential.get_token_info succeeded
+[09:29:18] | INFO | httpx | _client:1740 | HTTP Request: POST https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/openai/v1/conversations "HTTP/1.1 200 OK"
+[09:29:18] | INFO | azure.core.pipeline.policies.http_logging_policy | _universal:511 | Request URL: 'https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/agents/mcp-test-agent/versions?api-version=REDACTED'
+Request method: 'GET'
+Request headers:
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'e5981b0a-43ad-11f1-9922-c5b2d359ede8'
+    'User-Agent': 'azsdk-python-ai-projects/2.1.0 Python/3.13.7 (Linux-6.17.0-1010-azure-x86_64-with-glibc2.39)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+[09:29:19] | INFO | azure.core.pipeline.policies.http_logging_policy | _universal:554 | Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Encoding': 'REDACTED'
+    'Vary': 'REDACTED'
+    'request-context': 'REDACTED'
+    'x-ms-response-type': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'azureml-served-by-cluster': 'REDACTED'
+    'apim-request-id': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'x-content-type-options': 'REDACTED'
+    'x-ms-region': 'REDACTED'
+    'Date': 'Wed, 29 Apr 2026 09:29:18 GMT'
+[09:29:19] | INFO | azure.core.pipeline.policies.http_logging_policy | _universal:511 | Request URL: 'https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/agents/mcp-test-agent/versions?after=REDACTED&api-version=REDACTED'
+Request method: 'GET'
+Request headers:
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'e6103630-43ad-11f1-9922-c5b2d359ede8'
+    'User-Agent': 'azsdk-python-ai-projects/2.1.0 Python/3.13.7 (Linux-6.17.0-1010-azure-x86_64-with-glibc2.39)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+[09:29:19] | INFO | azure.core.pipeline.policies.http_logging_policy | _universal:554 | Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Encoding': 'REDACTED'
+    'Vary': 'REDACTED'
+    'request-context': 'REDACTED'
+    'x-ms-response-type': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'azureml-served-by-cluster': 'REDACTED'
+    'apim-request-id': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'x-content-type-options': 'REDACTED'
+    'x-ms-region': 'REDACTED'
+    'Date': 'Wed, 29 Apr 2026 09:29:18 GMT'
+[09:29:21] | INFO | httpx | _client:1740 | HTTP Request: POST https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/openai/v1/responses "HTTP/1.1 200 OK"
+[09:29:22] | INFO | default_logger | foundry_agent_cli:322 | Response creation event received with response ID: resp_23028faa60b367980069f1cf6ff76081908935782dd94a51d1
+[09:29:22] | INFO | default_logger | foundry_agent_cli:325 | Response in progress event received with response ID: resp_23028faa60b367980069f1cf6ff76081908935782dd94a51d1
+[09:29:22] | INFO | default_logger | foundry_agent_cli:327 | New output item added. Type: "web_search_call"
+[09:29:22] | INFO | default_logger | foundry_agent_cli:342 | Unfiltered other items : {
+  "item_id": "ws_23028faa60b367980069f1cf717010819091531bd99c550c38",
+  "output_index": 0,
+  "sequence_number": 3,
+  "type": "response.web_search_call.in_progress"
+}
+[09:29:22] | INFO | default_logger | foundry_agent_cli:342 | Unfiltered other items : {
+  "item_id": "ws_23028faa60b367980069f1cf717010819091531bd99c550c38",
+  "output_index": 0,
+  "sequence_number": 4,
+  "type": "response.web_search_call.searching"
+}
+[09:29:23] | INFO | default_logger | foundry_agent_cli:342 | Unfiltered other items : {
+  "item_id": "ws_23028faa60b367980069f1cf717010819091531bd99c550c38",
+  "output_index": 0,
+  "sequence_number": 5,
+  "type": "response.web_search_call.completed"
+}
+[09:29:23] | INFO | default_logger | foundry_agent_cli:340 | Output item completed. Type: "web_search_call"
+[09:29:23] | INFO | default_logger | foundry_agent_cli:327 | New output item added. Type: "message"
+[09:29:23] | INFO | default_logger | foundry_agent_cli:329 | New content part added: {
+  "annotations": [],
+  "text": "",
+  "type": "output_text",
+  "logprobs": []
+}
+[09:29:23] | INFO | default_logger | foundry_agent_cli:309 | Delta: "For dinner"
+[09:29:23] | INFO | default_logger | foundry_agent_cli:309 | Delta: " tonight"
+[09:29:23] | INFO | default_logger | foundry_agent_cli:309 | Delta: ", I’d go"
+[09:29:23] | INFO | default_logger | foundry_agent_cli:309 | Delta: " with something"
+[09:29:23] | INFO | default_logger | foundry_agent_cli:309 | Delta: " **warm but not too heavy** since Seoul"
+[09:29:23] | INFO | default_logger | foundry_agent_cli:309 | Delta: " is mild today"
+[09:29:23] | INFO | default_logger | foundry_agent_cli:309 | Delta: ","
+[09:29:23] | INFO | default_logger | foundry_agent_cli:309 | Delta: " around the"
+[09:29:23] | INFO | default_logger | foundry_agent_cli:309 | Delta: " high teens to low"
+[09:29:23] | INFO | default_logger | foundry_agent_cli:309 | Delta: " 20s °"
+[09:29:24] | INFO | default_logger | foundry_agent_cli:309 | Delta: "C with generally fair"
+[09:29:24] | INFO | default_logger | foundry_agent_cli:309 | Delta: " weather. "
+[09:29:24] | INFO | default_logger | foundry_agent_cli:309 | Delta: "([meteoblue.com](https://www.meteoblue.com/en/weather/week/seoul_republic-of-korea_1835847)"
+[09:29:24] | INFO | default_logger | foundry_agent_cli:309 | Delta: ")\n\nGood"
+[09:29:24] | INFO | default_logger | foundry_agent_cli:342 | Unfiltered other items : {
+  "annotation": {
+    "type": "url_citation",
+    "end_index": 253,
+    "start_index": 161,
+    "title": "Weather Seoul - meteoblue",
+    "url": "https://www.meteoblue.com/en/weather/week/seoul_republic-of-korea_1835847"
+  },
+  "annotation_index": 0,
+  "content_index": 0,
+  "item_id": "msg_23028faa60b367980069f1cf7305a48190a5825bd986cedf6a",
+  "output_index": 1,
+  "sequence_number": 23,
+  "type": "response.output_text.annotation.added"
+}
+[09:29:24] | INFO | default_logger | foundry_agent_cli:309 | Delta: " options:\n- **K"
+[09:29:24] | INFO | default_logger | foundry_agent_cli:309 | Delta: "orean BBQ"
+[09:29:24] | INFO | default_logger | foundry_agent_cli:309 | Delta: "** if"
+[09:29:24] | INFO | default_logger | foundry_agent_cli:309 | Delta: " you want a satisfying dinner out"
+[09:29:24] | INFO | default_logger | foundry_agent_cli:309 | Delta: "\n- **S"
+[09:29:24] | INFO | default_logger | foundry_agent_cli:309 | Delta: "und"
+[09:29:25] | INFO | default_logger | foundry_agent_cli:309 | Delta: "ubu"
+[09:29:25] | INFO | default_logger | foundry_agent_cli:309 | Delta: "-j"
+[09:29:25] | INFO | default_logger | foundry_agent_cli:309 | Delta: "jigae** or"
+[09:29:25] | INFO | default_logger | foundry_agent_cli:309 | Delta: " **kimchi-jj"
+[09:29:25] | INFO | default_logger | foundry_agent_cli:309 | Delta: "igae"
+[09:29:25] | INFO | default_logger | foundry_agent_cli:309 | Delta: "** if you"
+[09:29:25] | INFO | default_logger | foundry_agent_cli:309 | Delta: " want something"
+[09:29:25] | INFO | default_logger | foundry_agent_cli:309 | Delta: " comforting\n- **Na"
+[09:29:25] | INFO | default_logger | foundry_agent_cli:309 | Delta: "engmyeon**"
+[09:29:25] | INFO | default_logger | foundry_agent_cli:309 | Delta: " if you want something lighter"
+[09:29:25] | INFO | default_logger | foundry_agent_cli:309 | Delta: "\n- **Bib"
+[09:29:26] | INFO | default_logger | foundry_agent_cli:309 | Delta: "imbap** for a"
+[09:29:26] | INFO | default_logger | foundry_agent_cli:309 | Delta: " balanced"
+[09:29:26] | INFO | default_logger | foundry_agent_cli:309 | Delta: ", easy"
+[09:29:26] | INFO | default_logger | foundry_agent_cli:309 | Delta: " choice\n- **Chicken and beer"
+[09:29:26] | INFO | default_logger | foundry_agent_cli:309 | Delta: "** if you want"
+[09:29:26] | INFO | default_logger | foundry_agent_cli:309 | Delta: " something casual and share"
+[09:29:26] | INFO | default_logger | foundry_agent_cli:309 | Delta: "able\n\nIf you want my"
+[09:29:26] | INFO | default_logger | foundry_agent_cli:309 | Delta: " quick"
+[09:29:26] | INFO | default_logger | foundry_agent_cli:309 | Delta: " recommendation:"
+[09:29:26] | INFO | default_logger | foundry_agent_cli:309 | Delta: " **bibimbap or sund"
+[09:29:26] | INFO | default_logger | foundry_agent_cli:309 | Delta: "ubu-jjiga"
+[09:29:26] | INFO | default_logger | foundry_agent_cli:309 | Delta: "e** are"
+[09:29:27] | INFO | default_logger | foundry_agent_cli:309 | Delta: " the"
+[09:29:27] | INFO | default_logger | foundry_agent_cli:309 | Delta: " safest best picks tonight—"
+[09:29:27] | INFO | default_logger | foundry_agent_cli:309 | Delta: "f"
+[09:29:27] | INFO | default_logger | foundry_agent_cli:309 | Delta: "illing, easy"
+[09:29:27] | INFO | default_logger | foundry_agent_cli:309 | Delta: " to find"
+[09:29:27] | INFO | default_logger | foundry_agent_cli:309 | Delta: " in Seoul, and good for"
+[09:29:27] | INFO | default_logger | foundry_agent_cli:309 | Delta: " this"
+[09:29:27] | INFO | default_logger | foundry_agent_cli:309 | Delta: " kind of weather."
+[09:29:27] | INFO | default_logger | foundry_agent_cli:309 | Delta: " "
+[09:29:27] | INFO | default_logger | foundry_agent_cli:309 | Delta: "([meteoblue.com](https://www.meteoblue.com/en/weather/week/seoul_republic-of-korea_1835847))\n"
+[09:29:27] | INFO | default_logger | foundry_agent_cli:342 | Unfiltered other items : {
+  "annotation": {
+    "type": "url_citation",
+    "end_index": 815,
+    "start_index": 723,
+    "title": "Weather Seoul - meteoblue",
+    "url": "https://www.meteoblue.com/en/weather/week/seoul_republic-of-korea_1835847"
+  },
+  "annotation_index": 1,
+  "content_index": 0,
+  "item_id": "msg_23028faa60b367980069f1cf7305a48190a5825bd986cedf6a",
+  "output_index": 1,
+  "sequence_number": 63,
+  "type": "response.output_text.annotation.added"
+}
+[09:29:28] | INFO | default_logger | foundry_agent_cli:309 | Delta: "\nIf you want, I can also"
+[09:29:28] | INFO | default_logger | foundry_agent_cli:309 | Delta: " recommend:\n1. **K"
+[09:29:28] | INFO | default_logger | foundry_agent_cli:309 | Delta: "orean food only"
+[09:29:28] | INFO | default_logger | foundry_agent_cli:309 | Delta: "**\n2. **delivery"
+[09:29:28] | INFO | default_logger | foundry_agent_cli:309 | Delta: "-friendly options"
+[09:29:28] | INFO | default_logger | foundry_agent_cli:309 | Delta: "**\n3. **cheap"
+[09:29:28] | INFO | default_logger | foundry_agent_cli:309 | Delta: " dinner"
+[09:29:28] | INFO | default_logger | foundry_agent_cli:309 | Delta: " ideas"
+[09:29:28] | INFO | default_logger | foundry_agent_cli:309 | Delta: " near you"
+[09:29:28] | INFO | default_logger | foundry_agent_cli:309 | Delta: " in Seoul**\n4. **something"
+[09:29:29] | INFO | default_logger | foundry_agent_cli:309 | Delta: " healthy /"
+[09:29:29] | INFO | default_logger | foundry_agent_cli:309 | Delta: " high"
+[09:29:29] | INFO | default_logger | foundry_agent_cli:309 | Delta: "-protein**"
+[09:29:29] | INFO | default_logger | foundry_agent_cli:315 | Complete output: "For dinner tonight, I’d go with something **warm but not too heavy** since Seoul is mild today, around the high teens to low 20s °C with generally fair weather. ([meteoblue.com](https://www.meteoblue.com/en/weather/week/seoul_republic-of-korea_1835847))\n\nGood options:\n- **Korean BBQ** if you want a satisfying dinner out\n- **Sundubu-jjigae** or **kimchi-jjigae** if you want something comforting\n- **Naengmyeon** if you want something lighter\n- **Bibimbap** for a balanced, easy choice\n- **Chicken and beer** if you want something casual and shareable\n\nIf you want my quick recommendation: **bibimbap or sundubu-jjigae** are the safest best picks tonight—filling, easy to find in Seoul, and good for this kind of weather. ([meteoblue.com](https://www.meteoblue.com/en/weather/week/seoul_republic-of-korea_1835847))\n\nIf you want, I can also recommend:\n1. **Korean food only**\n2. **delivery-friendly options**\n3. **cheap dinner ideas near you in Seoul**\n4. **something healthy / high-protein**"
+[09:29:29] | INFO | default_logger | foundry_agent_cli:338 | Content part completed: {
+  "annotations": [
+    {
+      "end_index": 253,
+      "start_index": 161,
+      "title": "Weather Seoul - meteoblue",
+      "type": "url_citation",
+      "url": "https://www.meteoblue.com/en/weather/week/seoul_republic-of-korea_1835847"
+    },
+    {
+      "end_index": 815,
+      "start_index": 723,
+      "title": "Weather Seoul - meteoblue",
+      "type": "url_citation",
+      "url": "https://www.meteoblue.com/en/weather/week/seoul_republic-of-korea_1835847"
+    }
+  ],
+  "text": "For dinner tonight, I’d go with something **warm but not too heavy** since Seoul is mild today, around the high teens to low 20s °C with generally fair weather. ([meteoblue.com](https://www.meteoblue.com/en/weather/week/seoul_republic-of-korea_1835847))\n\nGood options:\n- **Korean BBQ** if you want a satisfying dinner out\n- **Sundubu-jjigae** or **kimchi-jjigae** if you want something comforting\n- **Naengmyeon** if you want something lighter\n- **Bibimbap** for a balanced, easy choice\n- **Chicken and beer** if you want something casual and shareable\n\nIf you want my quick recommendation: **bibimbap or sundubu-jjigae** are the safest best picks tonight—filling, easy to find in Seoul, and good for this kind of weather. ([meteoblue.com](https://www.meteoblue.com/en/weather/week/seoul_republic-of-korea_1835847))\n\nIf you want, I can also recommend:\n1. **Korean food only**\n2. **delivery-friendly options**\n3. **cheap dinner ideas near you in Seoul**\n4. **something healthy / high-protein**",
+  "type": "output_text",
+  "logprobs": []
+}
+[09:29:29] | INFO | default_logger | foundry_agent_cli:340 | Output item completed. Type: "message"
+[09:29:29] | INFO | default_logger | foundry_agent_cli:318 | input_tokens: 9491, output_tokens: 289, total_tokens: 9780
+[09:29:29] | INFO | default_logger | foundry_agent_cli:320 | Response completed successfully.
+[09:31:17] | INFO | default_logger | foundry_agent_cli:245 | Exiting the conversation loop.
+[09:31:17] | ERROR | asyncio | base_events:1879 | Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x77acd1c93750>
+[09:31:45] | INFO | httpx | _client:1740 | HTTP Request: POST https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/openai/v1/conversations "HTTP/1.1 200 OK"
+[09:31:48] | INFO | httpx | _client:1740 | HTTP Request: POST https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/openai/v1/responses "HTTP/1.1 200 OK"
+[09:37:02] | ERROR | asyncio | base_events:1879 | Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x715daa19b750>
+[10:00:24] | INFO | httpx | _client:1740 | HTTP Request: POST https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/openai/v1/conversations "HTTP/1.1 200 OK"
+[10:00:27] | INFO | httpx | _client:1740 | HTTP Request: POST https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/openai/v1/responses "HTTP/1.1 200 OK"
+[10:01:01] | INFO | httpx | _client:1740 | HTTP Request: POST https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/openai/v1/responses "HTTP/1.1 200 OK"
+[10:01:30] | INFO | httpx | _client:1740 | HTTP Request: POST https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/openai/v1/responses "HTTP/1.1 200 OK"
+[10:04:22] | INFO | httpx | _client:1740 | HTTP Request: POST https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/openai/v1/responses "HTTP/1.1 200 OK"
+[10:12:58] | INFO | httpx | _client:1740 | HTTP Request: POST https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/openai/v1/responses "HTTP/1.1 200 OK"
+[10:13:38] | INFO | httpx | _client:1740 | HTTP Request: POST https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/openai/v1/responses "HTTP/1.1 200 OK"
+[10:21:45] | ERROR | asyncio | base_events:1879 | Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x76cb979ce710>
+[10:22:03] | INFO | httpx | _client:1740 | HTTP Request: POST https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/openai/v1/conversations "HTTP/1.1 200 OK"
+[10:22:05] | INFO | httpx | _client:1740 | HTTP Request: POST https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/openai/v1/responses "HTTP/1.1 200 OK"
+[10:23:07] | INFO | httpx | _client:1740 | HTTP Request: POST https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/openai/v1/responses "HTTP/1.1 200 OK"
+[10:46:29] | ERROR | asyncio | base_events:1879 | Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7914271c2990>
+[10:46:44] | INFO | httpx | _client:1740 | HTTP Request: POST https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/openai/v1/conversations "HTTP/1.1 200 OK"
+[10:46:47] | INFO | httpx | _client:1740 | HTTP Request: POST https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/openai/v1/responses "HTTP/1.1 200 OK"
+[10:47:35] | INFO | httpx | _client:1740 | HTTP Request: POST https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/openai/v1/responses "HTTP/1.1 200 OK"
+[10:54:50] | INFO | httpx | _client:1740 | HTTP Request: POST https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/openai/v1/responses "HTTP/1.1 200 OK"
+[10:58:25] | INFO | httpx | _client:1740 | HTTP Request: POST https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/openai/v1/responses "HTTP/1.1 200 OK"
+[10:59:58] | INFO | httpx | _client:1740 | HTTP Request: POST https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/openai/v1/responses "HTTP/1.1 200 OK"
+[11:02:57] | INFO | httpx | _client:1740 | HTTP Request: POST https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/openai/v1/responses "HTTP/1.1 200 OK"
+[11:04:45] | INFO | httpx | _client:1740 | HTTP Request: POST https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/openai/v1/responses "HTTP/1.1 200 OK"
+[11:07:17] | INFO | httpx | _client:1740 | HTTP Request: POST https://eus2-project-kuko.services.ai.azure.com/api/projects/chat-project/openai/v1/responses "HTTP/1.1 200 OK"
+[11:07:21] | ERROR | asyncio | base_events:1879 | Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x703f10ac6990>

@@ -1,0 +1,44 @@
+name: Rollback to Blue - FRONTEND
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AZURE_CORE_OUTPUT: none
+  CONTAINER_APP_RESOURCE_GROUP: aks-rg
+  CONTAINER_APP_NAME: lgit-chat-frontend
+
+jobs:
+  rollback:
+    runs-on: ubuntu-latest
+    # environment: production
+
+    steps:
+      - name: Azure Login via OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Ensure containerapp extension
+        run: |
+          az extension add --name containerapp --upgrade
+
+      - name: Roll back traffic to blue
+        run: |
+          az containerapp ingress traffic set \
+            --name $CONTAINER_APP_NAME \
+            --resource-group $CONTAINER_APP_RESOURCE_GROUP \
+            --label-weight blue=100 green=0
+
+      - name: Show traffic config
+        run: |
+          az containerapp ingress traffic show \
+            --name $CONTAINER_APP_NAME \
+            --resource-group $CONTAINER_APP_RESOURCE_GROUP \
+            -o table

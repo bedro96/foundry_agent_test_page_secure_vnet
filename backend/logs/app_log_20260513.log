@@ -1,0 +1,9 @@
+[13:56:03] | INFO | chat-portal-agent_backend | main:80 | Logging initialized: APP_ENV=production
+[13:56:03] | INFO | chat-portal-agent_backend | main:84 | GenAI 텔레메트리 트레이싱이 비활성화 상태입니다
+[13:56:03] | INFO | chat-portal-agent_backend | main:118 | Application initialized successfully
+[13:56:03] | INFO | app.database | database:50 | Building database URL: host=kukomysql.mysql.database.azure.com, db=chatdb, user=azureuser, port=3306
+[13:56:03] | INFO | app.database | database:110 | MySQL SSL enabled: ssl_mode=required
+[13:56:03] | INFO | app.database | database:114 | Creating MySQL engine: host=kukomysql.mysql.database.azure.com, db=chatdb, pool_size=5, ssl=True
+[13:56:03] | INFO | app.database | database:147 | MySQL engine created successfully
+[13:56:03] | INFO | app.database | database:135 | MySQL connection established to kukomysql.mysql.database.azure.com/chatdb
+[13:56:03] | INFO | app.database | database:175 | MySQL health-check passed

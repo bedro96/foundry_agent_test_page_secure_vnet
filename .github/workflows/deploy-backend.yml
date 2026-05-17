@@ -1,0 +1,386 @@
+name: Deploy Backend to Azure Container Apps
+
+on:
+  workflow_run:
+    workflows: ["Build Docker Image - BACKEND"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: 'Docker image tag to deploy for backend (default: latest)'
+        required: false
+        default: 'latest'
+        type: string
+      force_recreate:
+        description: 'Force recreate all resources'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  REGISTRY_NAME: iotacr
+  IMAGE_NAME: lgit-chat-backend
+  ACR_RESOURCE_GROUP: aks-rg
+  CONTAINER_APP_RESOURCE_GROUP: aks-rg
+  CONTAINER_APP_NAME: lgit-chat-backend
+  CONTAINER_APP_ENV: lgitappenv
+  LOG_ANALYTICS_WORKSPACE: workspaceazureaiagent7154
+
+concurrency:
+  group: deploy-backend-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check-resources:
+    runs-on: ubuntu-latest
+    if: |
+      (github.event_name == 'workflow_run' &&
+       github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.event == 'push' &&
+       startsWith(github.event.workflow_run.head_branch, 'main'))
+      ||
+      (github.event_name == 'workflow_dispatch')
+    outputs:
+      log-analytics-exists: ${{ steps.check.outputs.log-analytics-exists }}
+      container-app-exists: ${{ steps.check.outputs.container-app-exists }}
+      environment-exists: ${{ steps.check.outputs.environment-exists }}
+    
+    steps:
+    - name: Azure Login via OIDC
+      uses: azure/login@v2
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Check existing resources
+      id: check
+      run: |
+        echo "Checking Azure resources..."
+        
+        # Check Log Analytics Workspace
+        if az monitor log-analytics workspace show --workspace-name ${{ env.LOG_ANALYTICS_WORKSPACE }} --resource-group ${{ env.CONTAINER_APP_RESOURCE_GROUP }} >/dev/null 2>&1; then
+          echo "log-analytics-exists=true" >> $GITHUB_OUTPUT
+          echo "✅ Log Analytics Workspace exists"
+        else
+          echo "log-analytics-exists=false" >> $GITHUB_OUTPUT
+          echo "❌ Log Analytics Workspace does not exist"
+        fi
+        
+        # Check Container App Environment
+        if az containerapp env show --name ${{ env.CONTAINER_APP_ENV }} --resource-group ${{ env.CONTAINER_APP_RESOURCE_GROUP }} >/dev/null 2>&1; then
+          echo "environment-exists=true" >> $GITHUB_OUTPUT
+          echo "✅ Container App Environment exists"
+        else
+          echo "environment-exists=false" >> $GITHUB_OUTPUT
+          echo "❌ Container App Environment does not exist"
+        fi
+        
+        # Check Container App
+        if az containerapp show --name ${{ env.CONTAINER_APP_NAME }} --resource-group ${{ env.CONTAINER_APP_RESOURCE_GROUP }} >/dev/null 2>&1; then
+          echo "container-app-exists=true" >> $GITHUB_OUTPUT
+          echo "✅ Container App exists"
+        else
+          echo "container-app-exists=false" >> $GITHUB_OUTPUT
+          echo "❌ Container App does not exist"
+        fi
+        echo "github.workspace directory: ${{ github.workspace }}"   # /home/runner/work/flask_AI_Chat/flask_AI_Chat
+        cd ${{ github.workspace }}
+        echo "current folder structure : $(ls -al)"
+
+  setup-environment-log-analytics-workspace:
+    needs: check-resources
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && needs.check-resources.outputs.log-analytics-exists == 'false'
+    
+    steps:
+    - name: Azure Login via OIDC
+      uses: azure/login@v2
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Create Log Analytics Workspace
+      run: |
+        echo "Creating Log Analytics Workspace..."
+        az monitor log-analytics workspace create \
+          --workspace-name ${{ env.LOG_ANALYTICS_WORKSPACE }} \
+          --resource-group ${{ env.CONTAINER_APP_RESOURCE_GROUP }} \
+          --location koreacentral
+        echo "✅ Log Analytics Workspace created"
+
+  setup-environment-container-app-environment:
+    needs: [check-resources, setup-environment-log-analytics-workspace]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && needs.check-resources.outputs.environment-exists == 'false' && always() && (needs.setup-environment-log-analytics-workspace.result == 'success' || needs.setup-environment-log-analytics-workspace.result == 'skipped')
+    
+    steps:
+    - name: Azure Login via OIDC
+      uses: azure/login@v2
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Create Container App Environment
+      run: |
+        echo "Creating Container App Environment with Log Analytics..."
+        
+        LOG_ANALYTICS_WORKSPACE_ID=$(az monitor log-analytics workspace show --query customerId -o tsv --workspace-name ${{ env.LOG_ANALYTICS_WORKSPACE }} --resource-group ${{ env.CONTAINER_APP_RESOURCE_GROUP }})
+        LOG_ANALYTICS_KEY=$(az monitor log-analytics workspace get-shared-keys --query primarySharedKey -o tsv --workspace-name ${{ env.LOG_ANALYTICS_WORKSPACE }} --resource-group ${{ env.CONTAINER_APP_RESOURCE_GROUP }})
+        
+        az containerapp env create \
+          --name ${{ env.CONTAINER_APP_ENV }} \
+          --resource-group ${{ env.CONTAINER_APP_RESOURCE_GROUP }} \
+          --location koreacentral \
+          --logs-workspace-id $LOG_ANALYTICS_WORKSPACE_ID \
+          --logs-workspace-key $LOG_ANALYTICS_KEY
+        
+        echo "✅ Container App Environment created"
+
+
+  setup-environment-container-app:
+    needs: [check-resources, setup-environment-container-app-environment]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && needs.check-resources.outputs.container-app-exists == 'false' && always() && (needs.setup-environment-container-app-environment.result == 'success' || needs.setup-environment-container-app-environment.result == 'skipped')
+    
+    steps:
+    - name: Azure Login via OIDC
+      uses: azure/login@v2
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Create new Container App
+      run: |
+        echo "Creating new Container App..."
+        az containerapp create \
+          --name ${{ env.CONTAINER_APP_NAME }} \
+          --resource-group ${{ env.CONTAINER_APP_RESOURCE_GROUP }} \
+          --environment ${{ env.CONTAINER_APP_ENV }} \
+          --image ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:latest \
+          --target-port 8000 \
+          --ingress external \
+          --registry-server ${{ env.REGISTRY_NAME }}.azurecr.io \
+          --registry-username ${{ env.REGISTRY_NAME }} \
+          --registry-password ${{ secrets.REGISTRY_PASSWORD }} \
+          --cpu 0.5 \
+          --memory 1Gi
+        
+        echo "✅ Container App created"
+        
+
+  update-app:
+    needs: [check-resources, setup-environment-container-app]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && always() && (needs.setup-environment-container-app.result == 'success' || needs.setup-environment-container-app.result == 'skipped')
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Azure Login via OIDC
+      uses: azure/login@v2
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+       # Jinja2 enable for yaml file input
+    - name: Install Python + Jinja2
+      run: |
+        python3 -m pip install --upgrade pip jinja2-cli
+        
+    - name: Render YAML template
+      run: |
+        # 이미지 태그 설정 (inputs에서 가져오거나 기본값 사용)
+        IMAGE_TAG="${{ inputs.image_tag || 'latest' }}"
+        
+        # config.yaml.j2 파일에 모든 필요한 변수 전달
+        jinja2 ${{ github.workspace }}/.github/templates/config-backend.yaml.j2 \
+          -D container_app_name=${{ env.CONTAINER_APP_NAME }} \
+          -D registry_name=${{ env.REGISTRY_NAME }} \
+          -D registry_password=${{ secrets.REGISTRY_PASSWORD }} \
+          -D image_name=${{ env.IMAGE_NAME }} \
+          -D image_tag=${IMAGE_TAG} > /tmp/health-probes.yaml
+        
+        echo "📝 Generated YAML content:"
+
+    - name: Update existing Container App
+      run: |
+        echo "Updating existing Container App..."
+        
+        # YAML 파일만 사용하여 업데이트(Liveness, Readiness, scale 설정)
+        az containerapp update \
+          --name ${{ env.CONTAINER_APP_NAME }} \
+          --resource-group ${{ env.CONTAINER_APP_RESOURCE_GROUP }} \
+          --yaml /tmp/health-probes.yaml
+
+        echo "✅ Container App updated with monitoring ports"
+
+    - name: restart revision
+      run: |
+        echo "Restarting revision..."
+
+        REVISION_SUFFIX=$(date +"%Y%m%d%H%M%S")
+
+        az containerapp revision restart \
+          --name ${{ env.CONTAINER_APP_NAME }} \
+          --resource-group ${{ env.CONTAINER_APP_RESOURCE_GROUP }} \
+          --revision "$(az containerapp show --name ${{ env.CONTAINER_APP_NAME }} --resource-group ${{ env.CONTAINER_APP_RESOURCE_GROUP }} --query properties.latestRevisionName -o tsv)"
+
+        echo "✅ Revision restarted"
+
+  verify-deployment:
+    needs: [check-resources, setup-environment-container-app, update-app]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && always() && (needs.update-app.result == 'success' || needs.update-app.result == 'skipped')
+    steps:
+    - name: Azure Login via OIDC
+      uses: azure/login@v2
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Verify deployment
+      id: verify
+      run: |
+        echo "🎉 Deployment completed successfully!"
+        
+        # Container App 상세 정보
+        echo "📱 Container App Information:"
+        CONTAINER_INFO=$(az containerapp show --name ${{ env.CONTAINER_APP_NAME }} --resource-group ${{ env.CONTAINER_APP_RESOURCE_GROUP }} --query "{name:name,status:properties.runningStatus,provisioningState:properties.provisioningState,fqdn:properties.configuration.ingress.fqdn,location:location}" -o json)
+        echo "$CONTAINER_INFO" | jq '.'
+        
+        # Extract individual fields
+        APP_NAME=$(echo $CONTAINER_INFO | jq -r '.name')
+        APP_STATUS=$(echo $CONTAINER_INFO | jq -r '.status')
+        PROVISIONING_STATE=$(echo $CONTAINER_INFO | jq -r '.provisioningState')
+        FQDN=$(echo $CONTAINER_INFO | jq -r '.fqdn')
+        LOCATION=$(echo $CONTAINER_INFO | jq -r '.location')
+        
+        # Save to outputs
+        echo "app_name=$APP_NAME" >> $GITHUB_OUTPUT
+        echo "app_status=$APP_STATUS" >> $GITHUB_OUTPUT
+        echo "provisioning_state=$PROVISIONING_STATE" >> $GITHUB_OUTPUT
+        echo "location=$LOCATION" >> $GITHUB_OUTPUT
+        
+        # Application URL
+        if [ ! -z "$FQDN" ] && [ "$FQDN" != "null" ]; then
+          echo "🌐 Application URL: https://$FQDN"
+          echo "app_url=https://$FQDN" >> $GITHUB_OUTPUT
+        else
+          echo "app_url=N/A" >> $GITHUB_OUTPUT
+        fi
+        
+        # Resource configuration
+        echo "💾 Resource Configuration:"
+        RESOURCES=$(az containerapp show --name ${{ env.CONTAINER_APP_NAME }} --resource-group ${{ env.CONTAINER_APP_RESOURCE_GROUP }} --query "properties.template.containers[0].resources" -o json)
+        echo "$RESOURCES" | jq '.'
+        CPU=$(echo $RESOURCES | jq -r '.cpu')
+        MEMORY=$(echo $RESOURCES | jq -r '.memory')
+        echo "cpu=$CPU" >> $GITHUB_OUTPUT
+        echo "memory=$MEMORY" >> $GITHUB_OUTPUT
+        
+        # Get latest revision info
+        LATEST_REVISION=$(az containerapp show --name ${{ env.CONTAINER_APP_NAME }} --resource-group ${{ env.CONTAINER_APP_RESOURCE_GROUP }} --query "properties.latestRevisionName" -o tsv)
+        echo "latest_revision=$LATEST_REVISION" >> $GITHUB_OUTPUT
+        echo "📦 Latest Revision: $LATEST_REVISION"
+        
+        echo "✅ Deployment verification completed!"
+
+    - name: Send Slack Notification
+      if: always()
+      run: |
+        # Determine status emoji and color
+        if [ "${{ steps.verify.outcome }}" == "success" ]; then
+          STATUS_EMOJI="✅"
+          STATUS_TEXT="SUCCESS"
+          COLOR="#36a64f"
+        else
+          STATUS_EMOJI="❌"
+          STATUS_TEXT="FAILED"
+          COLOR="#ff0000"
+        fi
+        
+        # Build rich Slack message with all deployment info
+        curl -X POST ${{ secrets.SLACK_WEBHOOK_URL }} \
+          -H 'Content-Type: application/json' \
+          -d '{
+            "username": "Azure Deployment Bot 🤖",
+            "icon_emoji": ":rocket:",
+            "attachments": [
+              {
+                "color": "'"$COLOR"'",
+                "title": "'"$STATUS_EMOJI"' Azure Container App Deployment '"$STATUS_TEXT"'",
+                "text": "*telegram-backend* has been deployed to Azure! 🎉",
+                "fields": [
+                  {
+                    "title": "📦 Repository",
+                    "value": "<https://github.com/${{ github.repository }}|${{ github.repository }}>",
+                    "short": true
+                  },
+                  {
+                    "title": "🌿 Branch",
+                    "value": "`${{ github.ref_name }}`",
+                    "short": true
+                  },
+                  {
+                    "title": "👤 Triggered By",
+                    "value": "${{ github.actor }}",
+                    "short": true
+                  },
+                  {
+                    "title": "🔄 Workflow",
+                    "value": "${{ github.workflow }}",
+                    "short": true
+                  },
+                  {
+                    "title": "📱 Container App Name",
+                    "value": "`${{ steps.verify.outputs.app_name }}`",
+                    "short": true
+                  },
+                  {
+                    "title": "🌐 Application URL",
+                    "value": "<${{ steps.verify.outputs.app_url }}|🚀 Open Application>",
+                    "short": true
+                  },
+                  {
+                    "title": "🟢 Running Status",
+                    "value": "`${{ steps.verify.outputs.app_status }}`",
+                    "short": true
+                  },
+                  {
+                    "title": "⚙️ Provisioning State",
+                    "value": "`${{ steps.verify.outputs.provisioning_state }}`",
+                    "short": true
+                  },
+                  {
+                    "title": "💾 Resources",
+                    "value": "CPU: `${{ steps.verify.outputs.cpu }}` | Memory: `${{ steps.verify.outputs.memory }}`",
+                    "short": false
+                  },
+                  {
+                    "title": "📦 Latest Revision",
+                    "value": "`${{ steps.verify.outputs.latest_revision }}`",
+                    "short": false
+                  },
+                  {
+                    "title": "🔢 Run Number",
+                    "value": "#${{ github.run_number }}",
+                    "short": true
+                  }
+                ],
+                "footer": "GitHub Actions · Azure Container Apps",
+                "footer_icon": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+                "ts": '"$(date +%s)"'
+              }
+            ]
+          }'
