@@ -23,7 +23,7 @@ permissions:
 
 env:
   REGISTRY_NAME: iotacr
-  IMAGE_NAME: lgit-securechat-backend
+  IMAGE_NAME: lgit-secure-chat-backend
   ACR_RESOURCE_GROUP: aks-rg
   CONTAINER_APP_RESOURCE_GROUP: secure-container-rg
   CONTAINER_APP_NAME: lgit-secure-chat-backend
