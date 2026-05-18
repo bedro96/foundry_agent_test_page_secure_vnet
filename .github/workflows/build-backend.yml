@@ -1,23 +1,24 @@
-name: Build Docker Image - FRONTEND
+name: Build Docker Image - BACKEND
 
 on:
   push:
     branches: [ main ]
     paths:
-      - 'frontend/**'
+      - 'backend/**'
+      - '.github/workflows/build-backend.yml'
 
   pull_request:
     branches: [ main ]
     paths:
-      - 'frontend/**'
-
+      - 'backend/**'
+      - '.github/workflows/build-backend.yml'
 permissions:
   id-token: write
   contents: read
 
 env:
   REGISTRY_NAME: iotacr
-  IMAGE_NAME: lgit-chat-frontend
+  IMAGE_NAME: lgit-secure-chat-backend
   ACR_RESOURCE_GROUP: aks-rg
 
 jobs:
@@ -57,8 +58,8 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
       with:
-        context: ./frontend
-        file: ./frontend/Dockerfile
+        context: ./backend
+        file: ./backend/Dockerfile
         platforms: linux/amd64
         push: true
         tags: ${{ steps.meta.outputs.tags }}
