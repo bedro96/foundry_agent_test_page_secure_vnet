@@ -12,20 +12,20 @@ properties:
       - name: {{ container_app_name }}
         image: {{ registry_name }}.azurecr.io/{{ image_name }}:{{ image_tag }}
         resources:
-          cpu: 0.5
-          memory: 1.0Gi
+          cpu: {{ container_app_cpu }}
+          memory: {{ container_app_memory }}
         probes:
           - type: Liveness
             httpGet:
               path: /health/live
-              port: 8000
+              port: {{ container_app_port }}
               scheme: HTTP
             initialDelaySeconds: 2
             periodSeconds: 10
           - type: Readiness
             httpGet:
               path: /health/ready
-              port: 8000
+              port: {{ container_app_port }}
               scheme: HTTP
             initialDelaySeconds: 2
             periodSeconds: 10

@@ -9,10 +9,10 @@ permissions:
 
 env:
   REGISTRY_NAME: iotacr
-  IMAGE_NAME: lgit-chat-frontend
-  ACR_RESOURCE_GROUP: fastcmp-rg
-  CONTAINER_APP_RESOURCE_GROUP: aks-rg
-  CONTAINER_APP_NAME: lgit-chat-frontend
+  IMAGE_NAME: lgit-secure-chat-frontend
+  ACR_RESOURCE_GROUP: secure-container-rg
+  CONTAINER_APP_RESOURCE_GROUP: secure-container-rg
+  CONTAINER_APP_NAME: lgit-secure-chat-frontend
   AZURE_CORE_OUTPUT: none
   IMAGE_TAG: ${{ github.sha }}
 

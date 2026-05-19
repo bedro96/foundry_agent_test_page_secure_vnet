@@ -9,8 +9,8 @@ permissions:
 
 env:
   AZURE_CORE_OUTPUT: none
-  CONTAINER_APP_RESOURCE_GROUP: aks-rg
-  CONTAINER_APP_NAME: lgit-chat-frontend
+  CONTAINER_APP_RESOURCE_GROUP: secure-container-rg
+  CONTAINER_APP_NAME: lgit-secure-chat-frontend
 
 jobs:
   promote:
