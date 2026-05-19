@@ -43,47 +43,66 @@ AI Chat Portal은 **Azure AI Foundry 에이전트**와 실시간으로 대화할
 
 ## 2. 시스템 아키텍처
 
-```
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│                              사용자 (브라우저)                                    │
-│                                    │                                            │
-│                           HTTPS (포트 443)                                       │
-│                                    ▼                                            │
-│  ┌─────────────────────────────────────────────────────────┐                    │
-│  │            프론트엔드 — Next.js 16 (ACA)                  │                    │
-│  │  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌────────────┐ │                    │
-│  │  │ 채팅     │ │ 관리자   │ │ MCP 테스트│ │ 로그인     │ │                    │
-│  │  │ 페이지   │ │ 페이지   │ │ 페이지   │ │ /회원가입  │ │                    │
-│  │  └──────────┘ └──────────┘ └──────────┘ └────────────┘ │                    │
-│  └──────────────────────────┬──────────────────────────────┘                    │
-│                             │ REST API + SSE (x-api-key 인증)                   │
-│                             ▼                                                   │
-│  ┌─────────────────────────────────────────────────────────┐                    │
-│  │            백엔드 — FastAPI (ACA, 포트 8000)              │                    │
-│  │  ┌──────────────────┐  ┌────────────────────────────┐  │                    │
-│  │  │ 에이전트          │  │  미들웨어                    │  │                    │
-│  │  │ 오케스트레이터    │  │  (CORS, API Key, 액세스로그) │  │                    │
-│  │  └────────┬─────────┘  └────────────────────────────┘  │                    │
-│  │           │                                             │                    │
-│  │  ┌────────▼─────────┐  ┌──────────────┐  ┌───────────┐│                    │
-│  │  │ Azure AI Foundry │  │ MCP 클라이언트│  │ Speech    ││                    │
-│  │  │ Agent (SSE)      │  │ (JSON-RPC)   │  │ 전사기    ││                    │
-│  │  └────────┬─────────┘  └──────┬───────┘  └─────┬─────┘│                    │
-│  └───────────┼───────────────────┼────────────────┼──────┘                    │
-│              │                   │                │                            │
-│              ▼                   ▼                ▼                            │
-│  ┌──────────────────┐  ┌──────────────┐  ┌──────────────┐                     │
-│  │ Azure AI Foundry │  │ 외부 MCP     │  │ Azure Speech │                     │
-│  │ (GPT 모델,       │  │ 서버         │  │ Services     │                     │
-│  │  Bing 그라운딩)   │  │              │  │              │                     │
-│  └──────────────────┘  └──────────────┘  └──────────────┘                     │
-│                                                                                │
-│  ┌──────────────────┐  ┌──────────────────────────┐                           │
-│  │ Azure MySQL      │  │ Azure Application        │                           │
-│  │ Flexible Server  │  │ Insights (텔레메트리)     │                           │
-│  │ (사용자, 대화)    │  │                          │                           │
-│  └──────────────────┘  └──────────────────────────┘                           │
-└─────────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph USER["👤 사용자"]
+        BROWSER["🌐 브라우저\nHTTPS / 443"]
+    end
+
+    subgraph ACA["☁️ Azure Container Apps"]
+        subgraph FE["📦 프론트엔드 — Next.js 16"]
+            direction LR
+            CHAT_PAGE["💬 채팅 페이지"]
+            ADMIN_PAGE["🛠️ 관리자 페이지"]
+            MCP_PAGE["🔧 MCP 테스트 페이지"]
+            LOGIN_PAGE["🔑 로그인 / 회원가입"]
+        end
+
+        subgraph BE["📦 백엔드 — FastAPI (Port 8000)"]
+            direction TB
+            MIDDLEWARE["🛡️ 미들웨어\n(CORS · API Key · 액세스 로그)"]
+            ORCHESTRATOR["🤖 에이전트 오케스트레이터"]
+            MCP_CLIENT["🔌 MCP 클라이언트\n(JSON-RPC 2.0)"]
+            SPEECH_SVC["🎙️ Speech 전사기"]
+            AUTH_SVC["🔐 인증 서비스\n(JWT · bcrypt)"]
+        end
+    end
+
+    subgraph AZURE_AI["🧠 Azure AI Services"]
+        FOUNDRY["Azure AI Foundry\n(GPT 모델 · Bing 그라운딩)"]
+        SPEECH["Azure Speech Services\n(배치 전사 API v3.2)"]
+        APPINSIGHTS["Azure Application Insights\n(OpenTelemetry 텔레메트리)"]
+    end
+
+    subgraph EXTERNAL["🌍 외부 / 데이터"]
+        MCP_SERVER["외부 MCP 서버\n(Streamable HTTP)"]
+        MYSQL["Azure MySQL\nFlexible Server\n(사용자 · 대화 · 메시지)"]
+    end
+
+    BROWSER -- "HTTPS" --> FE
+    FE -- "REST API + SSE\nx-api-key 인증" --> MIDDLEWARE
+    MIDDLEWARE --> ORCHESTRATOR
+    MIDDLEWARE --> AUTH_SVC
+    MIDDLEWARE --> MCP_CLIENT
+    MIDDLEWARE --> SPEECH_SVC
+    ORCHESTRATOR -- "SSE 스트리밍" --> FOUNDRY
+    MCP_CLIENT -- "JSON-RPC" --> MCP_SERVER
+    SPEECH_SVC -- "배치 전사" --> SPEECH
+    AUTH_SVC -- "SQLAlchemy" --> MYSQL
+    ORCHESTRATOR -- "대화 저장" --> MYSQL
+    BE -- "OTel Trace/Metric" --> APPINSIGHTS
+
+    classDef azure fill:#0078d4,color:#fff,stroke:#005a9e,stroke-width:2px
+    classDef fe fill:#0f172a,color:#38bdf8,stroke:#38bdf8,stroke-width:2px
+    classDef be fill:#1e293b,color:#86efac,stroke:#86efac,stroke-width:2px
+    classDef ext fill:#374151,color:#fcd34d,stroke:#fcd34d,stroke-width:2px
+    classDef user fill:#581c87,color:#e9d5ff,stroke:#a855f7,stroke-width:2px
+
+    class FOUNDRY,SPEECH,APPINSIGHTS azure
+    class CHAT_PAGE,ADMIN_PAGE,MCP_PAGE,LOGIN_PAGE fe
+    class MIDDLEWARE,ORCHESTRATOR,MCP_CLIENT,SPEECH_SVC,AUTH_SVC be
+    class MCP_SERVER,MYSQL ext
+    class BROWSER user
 ```
 
 ### 컴포넌트 설명
