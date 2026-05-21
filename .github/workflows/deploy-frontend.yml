@@ -23,6 +23,7 @@ permissions:
 
 env:
   REGISTRY_NAME: iotacr
+  REGISTRY_USERNAME: iotacr
   IMAGE_NAME: lgit-secure-chat-frontend
   ACR_RESOURCE_GROUP: aks-rg
   CONTAINER_APP_RESOURCE_GROUP: secure-container-rg
@@ -176,7 +177,7 @@ jobs:
           --target-port ${{ env.CONTAINER_APP_PORT }} \
           --ingress external \
           --registry-server ${{ env.REGISTRY_NAME }}.azurecr.io \
-          --registry-username ${{ env.REGISTRY_NAME }} \
+          --registry-username ${{ env.REGISTRY_USERNAME }} \
           --registry-password ${{ secrets.REGISTRY_PASSWORD }} \
           --cpu ${{ env.CONTAINER_APP_CPU }} \
           --memory ${{ env.CONTAINER_APP_MEMORY }}
@@ -217,6 +218,7 @@ jobs:
           -D container_app_memory=${{ env.CONTAINER_APP_MEMORY }} \
           -D container_app_port=${{ env.CONTAINER_APP_PORT }} \
           -D registry_name=${{ env.REGISTRY_NAME }} \
+          -D registry_username=${{ env.REGISTRY_USERNAME }} \
           -D registry_password=${{ secrets.REGISTRY_PASSWORD }} \
           -D image_name=${{ env.IMAGE_NAME }} \
           -D image_tag=${IMAGE_TAG} > /tmp/health-probes.yaml
